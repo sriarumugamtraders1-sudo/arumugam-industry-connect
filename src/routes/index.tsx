@@ -13,13 +13,11 @@ import {
   UserRound,
   Wrench,
   Package,
-  Building2,
 } from "lucide-react";
 
 import heroImage from "@/assets/hero-industrial.jpg";
 import storeImage from "@/assets/home-component-store.jpg";
 import jobworkImage from "@/assets/home-jobwork-floor.jpg";
-import deskImage from "@/assets/home-procurement-desk.jpg";
 import { WhatsAppIcon } from "@/components/site/WhatsAppFloat";
 import { SectionHeading } from "@/components/site/PageHero";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -31,7 +29,6 @@ const TITLE = "Sri Arumugam Traders | Industrial Components & Engineering Job-Wo
 const DESCRIPTION =
   "Industrial component supply and engineering job-work in Hosur, Tamil Nadu — flanges, valves, pipe fittings, fabrication and machining. Send your RFQ today.";
 
-const VENDOR_MAIL = `mailto:${COMPANY.email}?subject=${encodeURIComponent("Vendor Registration – Sri Arumugam Traders")}`;
 const MAX_MB = Math.round(MAX_DRAWING_BYTES / (1024 * 1024));
 
 const FAQS = [
@@ -50,10 +47,6 @@ const FAQS = [
   {
     q: "My component is not listed on the website. Can I still enquire?",
     a: "Yes. The product list shows our main categories only. Send your requirement with whatever details you have — we will review it and get back to you on sourcing or making it to your drawing.",
-  },
-  {
-    q: "How do I register Sri Arumugam Traders as a vendor?",
-    a: `Email your vendor registration form or supplier onboarding requirements to ${COMPANY.email}. We will complete it and return it with the company details you need.`,
   },
   {
     q: "Are my drawings kept confidential?",
@@ -113,7 +106,6 @@ function HomePage() {
       <Hero />
       <TwoWays />
       <Assurances />
-      <Procurement />
       <Faq />
       <DirectLine />
     </>
@@ -193,15 +185,17 @@ function Hero() {
             ))}
             <li>
               <a
-                href="#procurement"
+                href={whatsappLink()}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="group flex items-center gap-4 rounded-sm bg-navy-foreground/5 p-4 transition-colors hover:bg-navy-foreground/10"
               >
-                <span className="grid size-11 shrink-0 place-items-center rounded-sm bg-signal text-signal-foreground">
-                  <Building2 className="size-5" />
+                <span className="grid size-11 shrink-0 place-items-center rounded-sm bg-whatsapp text-whatsapp-foreground">
+                  <WhatsAppIcon className="size-5" />
                 </span>
                 <span className="flex-1">
-                  <span className="block font-semibold">I want to add you as a vendor</span>
-                  <span className="block text-sm text-navy-muted">Vendor registration for procurement teams</span>
+                  <span className="block font-semibold">Not sure what you need?</span>
+                  <span className="block text-sm text-navy-muted">Send a photo or message on WhatsApp</span>
                 </span>
                 <ArrowRight className="size-4 text-navy-muted transition-transform group-hover:translate-x-1 group-hover:text-navy-foreground" />
               </a>
@@ -358,76 +352,6 @@ function Assurances() {
             </div>
           </div>
         ))}
-      </div>
-    </section>
-  );
-}
-
-/* --------------------------------------------------------- PROCUREMENT */
-
-const VENDOR_STEPS = [
-  { n: "1", t: "Send your vendor form", d: "Email your registration form or onboarding checklist." },
-  { n: "2", t: "We complete it", d: "We fill in and return it with the company details you ask for." },
-  { n: "3", t: "Include us in your RFQs", d: "Send enquiries whenever your team needs components or job-work." },
-];
-
-function Procurement() {
-  return (
-    <section id="procurement" className="scroll-mt-24 py-20 md:py-28">
-      <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-        <div className="relative order-last lg:order-first">
-          <img
-            src={deskImage}
-            alt="Engineering drawing of a flange with a vernier caliper and a machined flange on a desk"
-            width={1200}
-            height={912}
-            loading="lazy"
-            className="aspect-[4/3] w-full rounded-md object-cover shadow-card"
-          />
-          <div className="absolute -bottom-6 left-4 right-4 rounded-md border bg-card p-5 shadow-lift sm:left-auto sm:right-6 sm:max-w-xs">
-            <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">Send vendor forms to</p>
-            <a href={VENDOR_MAIL} className="mt-1 block break-all font-semibold text-navy hover:text-signal">
-              {COMPANY.email}
-            </a>
-          </div>
-        </div>
-
-        <div>
-          <SectionHeading
-            eyebrow="For procurement & purchase teams"
-            title="Add Sri Arumugam Traders to your vendor list"
-            description="If your company maintains an approved vendor list, we would be glad to register. Getting us onboarded takes three simple steps."
-          />
-          <ol className="mt-8 space-y-px overflow-hidden rounded-md border bg-border">
-            {VENDOR_STEPS.map((s) => (
-              <li key={s.n} className="flex gap-5 bg-card p-5">
-                <span className="grid size-10 shrink-0 place-items-center rounded-sm bg-navy font-display text-lg font-bold text-navy-foreground">
-                  {s.n}
-                </span>
-                <div>
-                  <h3 className="font-bold text-navy">{s.t}</h3>
-                  <p className="mt-0.5 text-sm text-muted-foreground">{s.d}</p>
-                </div>
-              </li>
-            ))}
-          </ol>
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button asChild variant="navy" size="xl">
-              <a href={VENDOR_MAIL}>
-                <Mail /> Email vendor form
-              </a>
-            </Button>
-            <Button asChild variant="outline" size="xl">
-              <a
-                href={whatsappLink("Hello Sri Arumugam Traders, we would like to register you as a vendor.")}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <WhatsAppIcon className="size-4" /> Ask on WhatsApp
-              </a>
-            </Button>
-          </div>
-        </div>
       </div>
     </section>
   );

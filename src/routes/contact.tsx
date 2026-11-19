@@ -69,7 +69,7 @@ function ContactPage() {
         crumb="Contact"
         eyebrow="Contact us"
         title="Get in touch with our team"
-        description="Reach us for component supply, engineering job-work, RFQs and vendor registration."
+        description="Reach us for component supply, engineering job-work and RFQs."
         image={heroImage}
       >
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">

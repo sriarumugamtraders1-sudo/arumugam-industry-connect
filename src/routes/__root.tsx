@@ -87,7 +87,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "description",
         content:
-          "Sri Arumugam Traders, Hosur — industrial component supply, engineering job-work, fabrication and machining. RFQs and vendor registrations welcome.",
+          "Sri Arumugam Traders, Hosur — industrial component supply, engineering job-work, fabrication and machining. RFQs welcome.",
       },
       { name: "author", content: "Sri Arumugam Traders" },
       { name: "theme-color", content: "#14274a" },

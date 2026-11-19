@@ -15,7 +15,7 @@ export function Footer() {
           <Logo variant="light" />
           <p className="mt-5 max-w-sm text-sm leading-relaxed">
             Industrial component supply and engineering job-work from Hosur, Tamil Nadu. We welcome
-            RFQs and vendor registration enquiries from OEMs, plants and procurement teams.
+            RFQs from OEMs, plants and procurement teams.
           </p>
         </div>
 

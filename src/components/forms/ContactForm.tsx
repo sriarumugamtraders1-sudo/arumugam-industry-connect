@@ -62,7 +62,7 @@ export function ContactForm() {
         <Input id="c-mobile" type="tel" autoComplete="tel" placeholder="+91" className={inputClass} {...register("mobile")} />
       </Field>
       <Field id="c-subject" label="Subject" error={errors.subject?.message} className="md:col-span-2">
-        <Input id="c-subject" placeholder="e.g. Vendor registration, job-work enquiry" className={inputClass} {...register("subject")} />
+        <Input id="c-subject" placeholder="e.g. Job-work enquiry, component supply" className={inputClass} {...register("subject")} />
       </Field>
       <Field id="c-message" label="Message" required error={errors.message?.message} className="md:col-span-2">
         <Textarea id="c-message" rows={5} className="bg-card" {...register("message")} />
