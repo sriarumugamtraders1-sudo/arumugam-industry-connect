@@ -77,7 +77,7 @@ export function QuoteForm({ defaultProduct }: { defaultProduct?: string | undefi
         <p className="mx-auto mt-3 max-w-md text-muted-foreground">
           Your enquiry <span className="font-mono font-semibold text-foreground">{reference}</span> is saved.
           Your email app should now open with the details filled in and addressed to{" "}
-          <span className="font-semibold text-foreground">{COMPANY.email}</span>. Please press{" "}
+          <span className="font-semibold text-foreground [overflow-wrap:anywhere]">{COMPANY.email}</span>. Please press{" "}
           <strong className="text-foreground">Send</strong> in your email app.
         </p>
         {sentDrawing && (
@@ -111,7 +111,7 @@ export function QuoteForm({ defaultProduct }: { defaultProduct?: string | undefi
         </div>
         <p className="mx-auto mt-6 max-w-md text-xs text-muted-foreground">
           Email app didn't open? Write to{" "}
-          <a className="font-semibold text-navy underline" href={`mailto:${COMPANY.email}`}>
+          <a className="font-semibold text-navy underline [overflow-wrap:anywhere]" href={`mailto:${COMPANY.email}`}>
             {COMPANY.email}
           </a>{" "}
           with reference {reference}, or call {COMPANY.contactPerson} on{" "}
