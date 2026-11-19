@@ -321,7 +321,7 @@ function HomePage() {
                 key={ind.slug}
                 to="/industries"
                 hash={ind.slug}
-                className={`group relative isolate flex min-h-60 items-end overflow-hidden rounded-md ${i === 0 ? "sm:col-span-2 lg:row-span-2 lg:min-h-full" : ""}`}
+                className={`group relative isolate flex min-h-60 items-end overflow-hidden rounded-md ${i === 0 ? "sm:col-span-2" : ""}`}
               >
                 <img
                   src={ind.image}

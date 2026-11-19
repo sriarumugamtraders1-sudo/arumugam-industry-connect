@@ -47,7 +47,7 @@ export function Footer() {
             Products
           </h3>
           <ul className="mt-4 space-y-2.5 text-sm">
-            {PRODUCTS.slice(0, 7).map((p) => (
+            {PRODUCTS.map((p) => (
               <li key={p.slug}>
                 <Link to="/products" hash={p.slug} className="transition-colors hover:text-navy-foreground">
                   {p.name}
@@ -93,7 +93,7 @@ export function Footer() {
       </div>
 
       <div className="border-t border-navy-foreground/10">
-        <div className="container-page flex flex-col gap-3 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
+        <div className="container-page flex flex-col gap-3 py-6 pr-20 text-xs sm:flex-row sm:pr-24 sm:items-center sm:justify-between">
           <p>© {year} {COMPANY.name}. All rights reserved.</p>
           <Link to="/privacy-policy" className="transition-colors hover:text-navy-foreground">
             Privacy Policy

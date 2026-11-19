@@ -46,11 +46,11 @@ function ServicesPage() {
       <section className="py-16 md:py-24">
         <div className="container-page grid gap-16 md:gap-24">
           {SERVICES.map((s, i) => (
-            <article key={s.slug} id={s.slug} className="grid scroll-mt-28 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <article key={s.slug} id={s.slug} className="grid grid-cols-1 scroll-mt-28 items-center gap-10 lg:grid-cols-2 lg:gap-16">
               <div className={i % 2 === 1 ? "lg:order-2" : ""}>
                 <img src={s.image} alt={s.name} loading={i === 0 ? "eager" : "lazy"} className="aspect-[3/2] w-full rounded-md object-cover shadow-card" />
               </div>
-              <div>
+              <div className="min-w-0">
                 <p className="font-mono text-xs text-steel">Service {String(i + 1).padStart(2, "0")}</p>
                 <h2 className="mt-2 text-3xl font-bold text-navy">{s.name}</h2>
                 <p className="mt-4 leading-relaxed text-muted-foreground">{s.description}</p>
@@ -61,7 +61,7 @@ function ServicesPage() {
                     </li>
                   ))}
                 </ul>
-                <Button asChild variant="navy" size="lg" className="mt-8">
+                <Button asChild variant="navy" size="lg" className="mt-8 h-auto min-h-11 whitespace-normal py-3 text-left">
                   <Link to="/request-quote" search={{ product: s.name }}>
                     Enquire about {s.name.toLowerCase()} <ArrowRight />
                   </Link>
