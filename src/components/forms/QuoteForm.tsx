@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useServerFn } from "@tanstack/react-start";
-import { CheckCircle2, FileUp, Loader2, Send, X } from "lucide-react";
+import { CheckCircle2, FileUp, Loader2, Mail, Paperclip, Send, X } from "lucide-react";
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { submitQuoteRequest } from "@/lib/enquiries.functions";
 import { quoteSchema, validateDrawing, type QuoteInput } from "@/lib/enquiry-schema";
+import { buildQuoteMailto } from "@/lib/quote-mail";
 import { COMPANY } from "@/lib/site";
 
 import { Field, inputClass } from "./Field";
@@ -20,6 +21,8 @@ export function QuoteForm({ defaultProduct }: { defaultProduct?: string | undefi
   const [file, setFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string | null>(null);
   const [reference, setReference] = useState<string | null>(null);
+  const [mailto, setMailto] = useState<string | null>(null);
+  const [sentDrawing, setSentDrawing] = useState<string | null>(null);
 
   const {
     register,
@@ -51,11 +54,16 @@ export function QuoteForm({ defaultProduct }: { defaultProduct?: string | undefi
     if (file) fd.append("drawing", file);
     try {
       const res = await submit({ data: fd });
+      const link = buildQuoteMailto(values, res.reference, file?.name);
       setReference(res.reference);
+      setMailto(link);
+      setSentDrawing(file?.name ?? null);
       reset({ productRequired: "" });
       onFile(null);
       if (fileRef.current) fileRef.current.value = "";
       window.scrollTo({ top: 0, behavior: "smooth" });
+      // Open the customer's email app with the enquiry addressed to the company.
+      window.location.href = link;
     } catch (e) {
       toast.error(e instanceof Error ? e.message : "Something went wrong. Please try again.");
     }
@@ -65,19 +73,53 @@ export function QuoteForm({ defaultProduct }: { defaultProduct?: string | undefi
     return (
       <div className="rounded-md border bg-card p-8 text-center shadow-card md:p-12">
         <CheckCircle2 className="mx-auto size-12 text-success" />
-        <h2 className="mt-5 text-2xl font-bold text-navy">Enquiry received</h2>
+        <h2 className="mt-5 text-2xl font-bold text-navy">One last step — send the email</h2>
         <p className="mx-auto mt-3 max-w-md text-muted-foreground">
-          Thank you. Your enquiry has been recorded with reference{" "}
-          <span className="font-mono font-semibold text-foreground">{reference}</span>. Our team will review
-          it and get back to you. For urgent requirements, call {COMPANY.contactPerson} on{" "}
+          Your enquiry <span className="font-mono font-semibold text-foreground">{reference}</span> is saved.
+          Your email app should now open with the details filled in and addressed to{" "}
+          <span className="font-semibold text-foreground">{COMPANY.email}</span>. Please press{" "}
+          <strong className="text-foreground">Send</strong> in your email app.
+        </p>
+        {sentDrawing && (
+          <p className="mx-auto mt-4 flex max-w-md items-start justify-center gap-2 rounded-sm bg-accent px-4 py-3 text-left text-sm text-foreground">
+            <Paperclip className="mt-0.5 size-4 shrink-0 text-signal" />
+            <span>
+              Remember to attach your drawing <span className="font-semibold">{sentDrawing}</span> to the email
+              before sending.
+            </span>
+          </p>
+        )}
+        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+          {mailto && (
+            <Button asChild variant="navy" size="lg">
+              <a href={mailto}>
+                <Mail /> Open email again
+              </a>
+            </Button>
+          )}
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => {
+              setReference(null);
+              setMailto(null);
+              setSentDrawing(null);
+            }}
+          >
+            Submit another enquiry
+          </Button>
+        </div>
+        <p className="mx-auto mt-6 max-w-md text-xs text-muted-foreground">
+          Email app didn't open? Write to{" "}
+          <a className="font-semibold text-navy underline" href={`mailto:${COMPANY.email}`}>
+            {COMPANY.email}
+          </a>{" "}
+          with reference {reference}, or call {COMPANY.contactPerson} on{" "}
           <a className="font-semibold text-navy underline" href={`tel:${COMPANY.mobileTel}`}>
             {COMPANY.mobileDisplay}
           </a>
           .
         </p>
-        <Button variant="outline" size="lg" className="mt-8" onClick={() => setReference(null)}>
-          Submit another enquiry
-        </Button>
       </div>
     );
   }
@@ -208,7 +250,7 @@ export function QuoteForm({ defaultProduct }: { defaultProduct?: string | undefi
         </p>
         <Button type="submit" variant="navy" size="xl" disabled={isSubmitting} className="sm:min-w-52">
           {isSubmitting ? <Loader2 className="animate-spin" /> : <Send />}
-          {isSubmitting ? "Submitting…" : "Submit Enquiry"}
+          {isSubmitting ? "Submitting…" : "Submit & Email Enquiry"}
         </Button>
       </div>
     </form>

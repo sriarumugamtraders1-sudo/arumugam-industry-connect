@@ -34,3 +34,4 @@ use the editor.
 - Company details live in `src/lib/site.ts`; product, service and industry content in `src/lib/catalog.ts` — edit content there, not in pages, so every page stays consistent.
 - Enquiry forms submit through public server functions in `src/lib/enquiries.functions.ts` that validate with the shared zod schemas in `src/lib/enquiry-schema.ts` and write with the admin client; tables have RLS on with no public policies so visitors can never read submissions.
 - RFQ drawings go to the private `rfq-drawings` bucket via the server function only — never expose a public upload path.
+- After an RFQ saves, `src/lib/quote-mail.ts` opens a pre-filled mailto to the company email — no sender domain or Gmail connection exists, so the site cannot send email itself.
