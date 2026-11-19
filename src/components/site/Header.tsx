@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Mail, Menu, Phone, X } from "lucide-react";
+import { Menu, Phone, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -21,20 +21,6 @@ export function Header() {
 
   return (
     <>
-      <div className="hidden bg-navy-deep text-navy-muted md:block">
-        <div className="container-page flex h-9 items-center justify-between text-xs">
-          <span className="font-mono tracking-wider">GSTIN: {COMPANY.gstin}</span>
-          <div className="flex items-center gap-6">
-            <a href={`tel:${COMPANY.mobileTel}`} className="flex items-center gap-1.5 transition-colors hover:text-navy-foreground">
-              <Phone className="size-3.5" /> {COMPANY.mobileDisplay}
-            </a>
-            <a href={`mailto:${COMPANY.email}`} className="flex items-center gap-1.5 transition-colors hover:text-navy-foreground">
-              <Mail className="size-3.5" /> {COMPANY.email}
-            </a>
-          </div>
-        </div>
-      </div>
-
       <header
         className={cn(
           "sticky top-0 z-40 border-b bg-background/95 backdrop-blur transition-shadow",

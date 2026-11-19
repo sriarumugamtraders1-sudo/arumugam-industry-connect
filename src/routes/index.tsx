@@ -101,8 +101,8 @@ const WHY = [
   },
   {
     icon: BadgeCheck,
-    title: "GST-registered business",
-    text: `Proper invoicing and documentation. GSTIN ${COMPANY.gstin}.`,
+    title: "Proper invoicing & documentation",
+    text: "Clear quotations, invoices and dispatch documents for your purchase and accounts teams.",
   },
   {
     icon: ShieldCheck,
@@ -202,7 +202,7 @@ function HomePage() {
               {[
                 ["Business model", "Component supply & job-work"],
                 ["Location", "Andhivadi, Hosur – 635110"],
-                ["GSTIN", COMPANY.gstin],
+                ["Contact person", COMPANY.contactPerson],
                 ["Enquiries", "RFQs & vendor registration"],
               ].map(([k, v]) => (
                 <div key={k} className="bg-card p-4">

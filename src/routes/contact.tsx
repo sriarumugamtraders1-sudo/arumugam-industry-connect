@@ -103,7 +103,6 @@ function ContactPage() {
                 </li>
               ))}
             </ul>
-            <p className="mt-4 font-mono text-xs text-muted-foreground">GSTIN: {COMPANY.gstin}</p>
           </div>
 
           <div>

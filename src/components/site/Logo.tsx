@@ -1,41 +1,27 @@
 import { Link } from "@tanstack/react-router";
 
+import logoAsset from "@/assets/sri-arumugam-traders-logo.png.asset.json";
 import { cn } from "@/lib/utils";
 
 /**
- * Text logo placeholder. Replace the mark with the official
- * Sri Arumugam Traders logo image once it is supplied.
+ * Official Sri Arumugam Traders logo. The artwork has a white background,
+ * so on dark surfaces ("light" variant) it sits on a white plate.
  */
 export function Logo({ variant = "dark", className }: { variant?: "dark" | "light"; className?: string }) {
   const light = variant === "light";
   return (
-    <Link to="/" className={cn("group flex items-center gap-3", className)} aria-label="Sri Arumugam Traders — Home">
-      <span
-        className={cn(
-          "grid size-11 shrink-0 place-items-center rounded-sm font-display text-[0.95rem] font-extrabold tracking-tight",
-          light ? "bg-navy-foreground text-navy" : "bg-navy text-navy-foreground",
-        )}
-      >
-        SAT
-      </span>
-      <span className="flex flex-col leading-none">
-        <span
-          className={cn(
-            "font-display text-[1.05rem] font-bold tracking-tight sm:text-lg",
-            light ? "text-navy-foreground" : "text-navy",
-          )}
-        >
-          Sri Arumugam Traders
-        </span>
-        <span
-          className={cn(
-            "mt-1 font-mono text-[0.62rem] uppercase tracking-[0.18em]",
-            light ? "text-navy-muted" : "text-muted-foreground",
-          )}
-        >
-          Components · Job-Work · Hosur
-        </span>
-      </span>
+    <Link
+      to="/"
+      className={cn("inline-flex shrink-0 items-center", light && "rounded-sm bg-card px-3 py-2", className)}
+      aria-label="Sri Arumugam Traders — Home"
+    >
+      <img
+        src={logoAsset.url}
+        alt="Sri Arumugam Traders — Trust | Supply | Growth"
+        width={380}
+        height={78}
+        className={cn("w-auto", light ? "h-11" : "h-10 sm:h-12")}
+      />
     </Link>
   );
 }

@@ -17,9 +17,6 @@ export function Footer() {
             Industrial component supply and engineering job-work from Hosur, Tamil Nadu. We welcome
             RFQs and vendor registration enquiries from OEMs, plants and procurement teams.
           </p>
-          <p className="mt-5 font-mono text-xs tracking-wider text-navy-foreground">
-            GSTIN: {COMPANY.gstin}
-          </p>
         </div>
 
         <div>

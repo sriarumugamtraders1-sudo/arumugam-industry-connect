@@ -11,7 +11,6 @@ export const COMPANY = {
   mobileTel: "+916361177092",
   whatsappNumber: "916361177092",
   email: "sriarumugamtraders1@gmail.com",
-  gstin: "33BZLPC7639E1ZE",
   addressLines: [
     "Ground Floor, 28, Thally Road",
     "Opp. SEO Roofing, Andhivadi Check Post",

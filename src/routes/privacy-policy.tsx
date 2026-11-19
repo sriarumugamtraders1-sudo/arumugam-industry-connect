@@ -32,8 +32,7 @@ function PrivacyPage() {
           <div>
             <h2>1. Who we are</h2>
             <p>
-              This website is operated by {COMPANY.name}, {COMPANY.addressLines.join(", ")} (GSTIN{" "}
-              {COMPANY.gstin}). This policy explains how we handle information you share with us through
+              This website is operated by {COMPANY.name}, {COMPANY.addressLines.join(", ")}. This policy explains how we handle information you share with us through
               this website.
             </p>
           </div>
