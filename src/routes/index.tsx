@@ -1,33 +1,65 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
-  BadgeCheck,
-  ClipboardList,
-  Cog,
-  Factory,
-  FileText,
-  Flame,
-  Handshake,
+  ArrowUpRight,
+  ClipboardCheck,
+  FileLock2,
+  Mail,
   MapPin,
-  PackageSearch,
-  Ruler,
-  ShieldCheck,
-  Truck,
-  Users,
+  MessagesSquare,
+  Phone,
+  ScrollText,
+  Send,
+  UserRound,
   Wrench,
+  Package,
+  Building2,
 } from "lucide-react";
 
 import heroImage from "@/assets/hero-industrial.jpg";
-import aboutImage from "@/assets/about-workshop.jpg";
-import { CtaBand } from "@/components/site/CtaBand";
+import storeImage from "@/assets/home-component-store.jpg";
+import jobworkImage from "@/assets/home-jobwork-floor.jpg";
+import deskImage from "@/assets/home-procurement-desk.jpg";
+import { WhatsAppIcon } from "@/components/site/WhatsAppFloat";
 import { SectionHeading } from "@/components/site/PageHero";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Button } from "@/components/ui/button";
-import { INDUSTRIES, PRODUCTS } from "@/lib/catalog";
-import { COMPANY } from "@/lib/site";
+import { ALLOWED_DRAWING_EXTENSIONS, MAX_DRAWING_BYTES } from "@/lib/enquiry-schema";
+import { COMPANY, whatsappLink } from "@/lib/site";
 
 const TITLE = "Sri Arumugam Traders | Industrial Components & Engineering Job-Work, Hosur";
 const DESCRIPTION =
   "Industrial component supply and engineering job-work in Hosur, Tamil Nadu — flanges, valves, pipe fittings, fabrication and machining. Send your RFQ today.";
+
+const VENDOR_MAIL = `mailto:${COMPANY.email}?subject=${encodeURIComponent("Vendor Registration – Sri Arumugam Traders")}`;
+const MAX_MB = Math.round(MAX_DRAWING_BYTES / (1024 * 1024));
+
+const FAQS = [
+  {
+    q: "Do you supply components and also take up job-work?",
+    a: "Yes. We supply industrial components such as flanges, valves and pipe fittings, and we also undertake engineering job-work — fabrication and machining — as per customer drawings. You can send both kinds of requirements to the same contact.",
+  },
+  {
+    q: "What should I include in an RFQ?",
+    a: "The product or component name, material specification, size or dimensions, quantity and any technical requirements. Attaching a drawing, datasheet or photo helps us review your requirement accurately.",
+  },
+  {
+    q: "Which drawing files can I upload with my RFQ?",
+    a: `You can attach ${ALLOWED_DRAWING_EXTENSIONS.map((e) => e.toUpperCase()).join(", ")} files up to ${MAX_MB} MB. For larger or multiple files, mention it in your RFQ and we will share how to send them.`,
+  },
+  {
+    q: "My component is not listed on the website. Can I still enquire?",
+    a: "Yes. The product list shows our main categories only. Send your requirement with whatever details you have — we will review it and get back to you on sourcing or making it to your drawing.",
+  },
+  {
+    q: "How do I register Sri Arumugam Traders as a vendor?",
+    a: `Email your vendor registration form or supplier onboarding requirements to ${COMPANY.email}. We will complete it and return it with the company details you need.`,
+  },
+  {
+    q: "Are my drawings kept confidential?",
+    a: "Drawings uploaded through our RFQ form are stored privately and used only to evaluate and quote for your enquiry. They are not shared publicly.",
+  },
+];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -58,74 +90,67 @@ export const Route = createFileRoute("/")({
           },
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: FAQS.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
     ],
   }),
   component: HomePage,
 });
 
-const PILLARS = [
-  { icon: Truck, title: "Industrial Component Supply", text: "Flanges, valves, pipes, fittings and components." },
-  { icon: Wrench, title: "Engineering Job-Work", text: "Machining and fabrication to your drawings." },
-  { icon: ClipboardList, title: "RFQs & Vendor Registration", text: "We welcome RFQs and approved-vendor enquiries." },
-];
-
-const ACTIVITIES = [
-  { icon: Truck, title: "Industrial Component Supply" },
-  { icon: Wrench, title: "Engineering Job-Work" },
-  { icon: Flame, title: "Fabrication Work" },
-  { icon: Cog, title: "Machining Work" },
-  { icon: PackageSearch, title: "Industrial Products Trading" },
-  { icon: Ruler, title: "Custom Engineering Components" },
-];
-
-const WHY = [
-  {
-    icon: Handshake,
-    title: "Supply and job-work under one roof",
-    text: "Procure standard components and get drawing-based job-work done through a single point of contact.",
-  },
-  {
-    icon: FileText,
-    title: "Drawing-based, specification-led",
-    text: "Every requirement is reviewed against your drawing, material and quantity before we quote.",
-  },
-  {
-    icon: Users,
-    title: "Direct, responsive communication",
-    text: "Speak directly with the person handling your enquiry — by phone, email or WhatsApp.",
-  },
-  {
-    icon: MapPin,
-    title: "Based in Hosur's industrial belt",
-    text: "Located at Andhivadi, Hosur — convenient for industries across Tamil Nadu and Karnataka.",
-  },
-  {
-    icon: BadgeCheck,
-    title: "Proper invoicing & documentation",
-    text: "Clear quotations, invoices and dispatch documents for your purchase and accounts teams.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Confidential handling of drawings",
-    text: "Technical drawings and specifications you share are used only to evaluate your enquiry.",
-  },
-];
-
 function HomePage() {
   return (
     <>
-      {/* HERO */}
-      <section className="relative isolate overflow-hidden bg-navy-deep text-navy-foreground">
-        <img
-          src={heroImage}
-          alt="Precision engineering workshop with CNC machine, steel flanges and pipe fittings"
-          className="absolute inset-0 -z-20 size-full object-cover"
-          fetchPriority="high"
-        />
-        <div className="absolute inset-0 -z-10 bg-hero-overlay" />
-        <div className="container-page flex min-h-[38rem] flex-col justify-center py-20 md:min-h-[42rem]">
+      <Hero />
+      <TwoWays />
+      <Assurances />
+      <Procurement />
+      <Faq />
+      <DirectLine />
+    </>
+  );
+}
+
+/* ---------------------------------------------------------------- HERO */
+
+const INTENTS = [
+  {
+    icon: Package,
+    title: "I need industrial components",
+    text: "Flanges, valves, pipe fittings and more",
+    to: "/products" as const,
+  },
+  {
+    icon: Wrench,
+    title: "I need job-work done",
+    text: "Fabrication & machining to your drawing",
+    to: "/services" as const,
+  },
+];
+
+function Hero() {
+  return (
+    <section className="relative isolate overflow-hidden bg-navy-deep text-navy-foreground">
+      <img
+        src={heroImage}
+        alt="Precision engineering workshop with CNC machine, steel flanges and pipe fittings"
+        className="absolute inset-0 -z-20 size-full object-cover"
+        fetchPriority="high"
+      />
+      <div className="absolute inset-0 -z-10 bg-hero-overlay" />
+      <div className="container-page grid items-center gap-12 py-16 md:py-24 lg:min-h-[40rem] lg:grid-cols-[1.35fr_1fr] lg:gap-16">
+        <div>
           <p className="eyebrow animate-fade-up">Hosur · Tamil Nadu · India</p>
-          <h1 className="animate-fade-up animation-delay-1 mt-5 max-w-3xl text-4xl font-extrabold leading-[1.05] sm:text-5xl lg:text-6xl">
+          <h1 className="animate-fade-up animation-delay-1 mt-5 text-4xl font-extrabold leading-[1.05] sm:text-5xl xl:text-6xl">
             Your Trusted Partner in Industrial Components &amp; Engineering Solutions
           </h1>
           <p className="animate-fade-up animation-delay-2 mt-6 max-w-2xl text-lg leading-relaxed text-navy-muted">
@@ -143,250 +168,371 @@ function HomePage() {
             </Button>
           </div>
         </div>
-      </section>
 
-      {/* PILLARS */}
-      <section className="relative z-10 -mt-14">
-        <div className="container-page">
-          <div className="grid overflow-hidden rounded-md border bg-card shadow-lift md:grid-cols-3">
-            {PILLARS.map((p, i) => (
-              <div key={p.title} className={`flex gap-4 p-6 md:p-7 ${i > 0 ? "border-t md:border-l md:border-t-0" : ""}`}>
-                <span className="grid size-11 shrink-0 place-items-center rounded-sm bg-navy text-navy-foreground">
-                  <p.icon className="size-5" />
+        <div className="animate-fade-up animation-delay-2 rounded-md border border-navy-foreground/15 bg-navy-deep/70 p-2 shadow-lift backdrop-blur-md">
+          <p className="px-4 pb-2 pt-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-navy-muted">
+            How can we help you today?
+          </p>
+          <ul className="grid gap-1.5">
+            {INTENTS.map((it) => (
+              <li key={it.title}>
+                <Link
+                  to={it.to}
+                  className="group flex items-center gap-4 rounded-sm bg-navy-foreground/5 p-4 transition-colors hover:bg-navy-foreground/10"
+                >
+                  <span className="grid size-11 shrink-0 place-items-center rounded-sm bg-signal text-signal-foreground">
+                    <it.icon className="size-5" />
+                  </span>
+                  <span className="flex-1">
+                    <span className="block font-semibold">{it.title}</span>
+                    <span className="block text-sm text-navy-muted">{it.text}</span>
+                  </span>
+                  <ArrowRight className="size-4 text-navy-muted transition-transform group-hover:translate-x-1 group-hover:text-navy-foreground" />
+                </Link>
+              </li>
+            ))}
+            <li>
+              <a
+                href="#procurement"
+                className="group flex items-center gap-4 rounded-sm bg-navy-foreground/5 p-4 transition-colors hover:bg-navy-foreground/10"
+              >
+                <span className="grid size-11 shrink-0 place-items-center rounded-sm bg-signal text-signal-foreground">
+                  <Building2 className="size-5" />
+                </span>
+                <span className="flex-1">
+                  <span className="block font-semibold">I want to add you as a vendor</span>
+                  <span className="block text-sm text-navy-muted">Vendor registration for procurement teams</span>
+                </span>
+                <ArrowRight className="size-4 text-navy-muted transition-transform group-hover:translate-x-1 group-hover:text-navy-foreground" />
+              </a>
+            </li>
+          </ul>
+          <Link
+            to="/request-quote"
+            className="mt-2 flex items-center justify-between rounded-sm bg-navy-foreground px-4 py-3.5 text-sm font-semibold text-navy transition-colors hover:bg-steel-light"
+          >
+            <span className="flex items-center gap-2">
+              <Send className="size-4" /> Have a drawing? Send your RFQ
+            </span>
+            <ArrowUpRight className="size-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------------------------------------------------------ TWO WAYS */
+
+const WAYS = [
+  {
+    tag: "01 · Component supply",
+    title: "Buy industrial components",
+    image: storeImage,
+    alt: "Steel racks stocked with industrial valves, flanges and pipe fittings",
+    send: ["Component list or BOM", "Material grade and pressure class", "Size and quantity"],
+    get: ["Review of your list and specifications", "Quotation for the items you need", "Supply as agreed in the order"],
+    links: [
+      { label: "Flanges", hash: "industrial-flanges" },
+      { label: "Valves", hash: "industrial-valves" },
+      { label: "Pipes & fittings", hash: "pipes-and-pipe-fittings" },
+      { label: "Sight flow indicators", hash: "sight-flow-indicators" },
+      { label: "Safety relief valves", hash: "safety-relief-valves" },
+    ],
+    to: "/products" as const,
+    cta: "See product range",
+  },
+  {
+    tag: "02 · Engineering job-work",
+    title: "Get parts made to your drawing",
+    image: jobworkImage,
+    alt: "Fabricator welding a flanged steel pipe spool in a workshop",
+    send: ["Drawing, sketch or sample details", "Material and finish requirements", "Quantity and required date"],
+    get: ["Technical review of the drawing", "Quotation with scope of work", "Fabrication or machining as agreed"],
+    links: [
+      { label: "Fabrication", hash: "fabrication" },
+      { label: "Machining", hash: "machining" },
+      { label: "Engineering job-work", hash: "engineering-job-work" },
+      { label: "Custom components", hash: "custom-component-requirements" },
+    ],
+    to: "/services" as const,
+    cta: "See job-work services",
+  },
+];
+
+function TwoWays() {
+  return (
+    <section className="py-20 md:py-28">
+      <div className="container-page">
+        <div className="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+          <SectionHeading
+            eyebrow="Two ways to work with us"
+            title="Ready-made components or parts made to your drawing — one contact for both"
+          />
+          <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">
+            Many buyers need both standard items and drawing-based parts for the same job. Send them together
+            and deal with a single point of contact.
+          </p>
+        </div>
+
+        <div className="mt-12 grid gap-6 lg:grid-cols-2">
+          {WAYS.map((w) => (
+            <article key={w.tag} className="flex flex-col overflow-hidden rounded-md border bg-card shadow-card">
+              <div className="relative aspect-[16/9] overflow-hidden">
+                <img src={w.image} alt={w.alt} width={1200} height={912} loading="lazy" className="size-full object-cover" />
+                <span className="absolute left-4 top-4 rounded-sm bg-navy px-3 py-1.5 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-navy-foreground">
+                  {w.tag}
+                </span>
+              </div>
+              <div className="flex flex-1 flex-col p-6 md:p-8">
+                <h3 className="text-2xl font-bold text-navy">{w.title}</h3>
+                <div className="mt-6 grid gap-6 sm:grid-cols-2">
+                  <div>
+                    <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">You send</p>
+                    <ul className="mt-3 space-y-2 text-sm text-foreground/85">
+                      {w.send.map((s) => (
+                        <li key={s} className="flex gap-2">
+                          <span className="mt-2 size-1.5 shrink-0 rounded-full bg-steel" /> {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-signal">We take care of</p>
+                    <ul className="mt-3 space-y-2 text-sm text-foreground/85">
+                      {w.get.map((s) => (
+                        <li key={s} className="flex gap-2">
+                          <span className="mt-2 size-1.5 shrink-0 rounded-full bg-signal" /> {s}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {w.links.map((l) => (
+                    <Link
+                      key={l.hash}
+                      to={w.to}
+                      hash={l.hash}
+                      className="rounded-sm border bg-secondary px-3 py-1.5 text-xs font-medium text-navy transition-colors hover:border-signal hover:bg-accent"
+                    >
+                      {l.label}
+                    </Link>
+                  ))}
+                </div>
+                <div className="mt-auto pt-8">
+                  <Button asChild variant="outline" size="lg">
+                    <Link to={w.to}>
+                      {w.cta} <ArrowRight />
+                    </Link>
+                  </Button>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------------------------------------------------------- ASSURANCES */
+
+const ASSURANCES = [
+  { icon: ClipboardCheck, title: "Specification first", text: "Every RFQ is checked against your drawing, material and quantity before quoting." },
+  { icon: FileLock2, title: "Private drawings", text: "Uploaded drawings are stored privately and used only for your enquiry." },
+  { icon: UserRound, title: "One person to talk to", text: `${COMPANY.contactPerson} handles your enquiry directly — no call centres.` },
+  { icon: ScrollText, title: "Clear paperwork", text: "Written quotations and proper documentation for your purchase team." },
+];
+
+function Assurances() {
+  return (
+    <section className="blueprint-grid bg-navy-deep text-navy-foreground">
+      <div className="container-page grid gap-px py-4 sm:grid-cols-2 lg:grid-cols-4">
+        {ASSURANCES.map((a) => (
+          <div key={a.title} className="flex gap-4 px-2 py-8 lg:px-6">
+            <a.icon className="mt-0.5 size-6 shrink-0 text-signal" />
+            <div>
+              <h3 className="font-bold">{a.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-navy-muted">{a.text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------------------------------------- PROCUREMENT */
+
+const VENDOR_STEPS = [
+  { n: "1", t: "Send your vendor form", d: "Email your registration form or onboarding checklist." },
+  { n: "2", t: "We complete it", d: "We fill in and return it with the company details you ask for." },
+  { n: "3", t: "Include us in your RFQs", d: "Send enquiries whenever your team needs components or job-work." },
+];
+
+function Procurement() {
+  return (
+    <section id="procurement" className="scroll-mt-24 py-20 md:py-28">
+      <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+        <div className="relative order-last lg:order-first">
+          <img
+            src={deskImage}
+            alt="Engineering drawing of a flange with a vernier caliper and a machined flange on a desk"
+            width={1200}
+            height={912}
+            loading="lazy"
+            className="aspect-[4/3] w-full rounded-md object-cover shadow-card"
+          />
+          <div className="absolute -bottom-6 left-4 right-4 rounded-md border bg-card p-5 shadow-lift sm:left-auto sm:right-6 sm:max-w-xs">
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">Send vendor forms to</p>
+            <a href={VENDOR_MAIL} className="mt-1 block break-all font-semibold text-navy hover:text-signal">
+              {COMPANY.email}
+            </a>
+          </div>
+        </div>
+
+        <div>
+          <SectionHeading
+            eyebrow="For procurement & purchase teams"
+            title="Add Sri Arumugam Traders to your vendor list"
+            description="If your company maintains an approved vendor list, we would be glad to register. Getting us onboarded takes three simple steps."
+          />
+          <ol className="mt-8 space-y-px overflow-hidden rounded-md border bg-border">
+            {VENDOR_STEPS.map((s) => (
+              <li key={s.n} className="flex gap-5 bg-card p-5">
+                <span className="grid size-10 shrink-0 place-items-center rounded-sm bg-navy font-display text-lg font-bold text-navy-foreground">
+                  {s.n}
                 </span>
                 <div>
-                  <h2 className="text-base font-bold text-navy">{p.title}</h2>
-                  <p className="mt-1 text-sm text-muted-foreground">{p.text}</p>
+                  <h3 className="font-bold text-navy">{s.t}</h3>
+                  <p className="mt-0.5 text-sm text-muted-foreground">{s.d}</p>
                 </div>
-              </div>
+              </li>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* INTRO */}
-      <section className="py-20 md:py-28">
-        <div className="container-page grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          <div className="relative">
-            <img
-              src={aboutImage}
-              alt="Engineer inspecting a machined flange component with a vernier caliper"
-              className="aspect-[4/3] w-full rounded-md object-cover shadow-card"
-              loading="lazy"
-            />
-            <div className="absolute -bottom-6 -right-2 hidden rounded-md bg-navy p-5 text-navy-foreground shadow-lift sm:block md:-right-6">
-              <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-navy-muted">Contact person</p>
-              <p className="mt-1 font-display text-lg font-bold">{COMPANY.contactPerson}</p>
-              <a href={`tel:${COMPANY.mobileTel}`} className="text-sm text-navy-muted hover:text-navy-foreground">
-                {COMPANY.mobileDisplay}
-              </a>
-            </div>
-          </div>
-          <div>
-            <SectionHeading
-              eyebrow="About the company"
-              title="Industrial supply and engineering job-work from Hosur"
-            />
-            <div className="mt-6 space-y-4 text-base leading-relaxed text-muted-foreground">
-              <p>
-                {COMPANY.name} is an industrial business based in Hosur, Krishnagiri district, engaged in
-                the supply of industrial components and the execution of engineering job-work.
-              </p>
-              <p>
-                We support OEMs, engineering companies, maintenance departments and purchase teams with
-                flanges, valves, pipe fittings and custom components — and take up fabrication and
-                machining work as per customer drawings.
-              </p>
-            </div>
-            <dl className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-md border bg-border sm:grid-cols-2">
-              {[
-                ["Business model", "Component supply & job-work"],
-                ["Location", "Andhivadi, Hosur – 635110"],
-                ["Contact person", COMPANY.contactPerson],
-                ["Enquiries", "RFQs & vendor registration"],
-              ].map(([k, v]) => (
-                <div key={k} className="bg-card p-4">
-                  <dt className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted-foreground">{k}</dt>
-                  <dd className="mt-1 text-sm font-semibold text-navy">{v}</dd>
-                </div>
-              ))}
-            </dl>
-            <Button asChild variant="link" className="mt-6 px-0 text-navy">
-              <Link to="/about">
-                More about us <ArrowRight />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* ACTIVITIES */}
-      <section className="steel-grid border-y bg-secondary py-20 md:py-24">
-        <div className="container-page">
-          <SectionHeading
-            eyebrow="Our business activities"
-            title="What we do"
-            description="A focused set of industrial activities, handled with attention to specification and clear communication."
-          />
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {ACTIVITIES.map((a, i) => (
-              <div
-                key={a.title}
-                className="group flex items-center gap-5 rounded-md border bg-card p-6 shadow-card transition-all hover:-translate-y-0.5 hover:border-signal/50 hover:shadow-lift"
-              >
-                <span className="font-mono text-xs text-steel">0{i + 1}</span>
-                <span className="grid size-12 place-items-center rounded-sm bg-accent text-navy transition-colors group-hover:bg-navy group-hover:text-navy-foreground">
-                  <a.icon className="size-5" />
-                </span>
-                <h3 className="text-base font-bold text-navy">{a.title}</h3>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PRODUCTS OVERVIEW */}
-      <section className="py-20 md:py-28">
-        <div className="container-page">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <SectionHeading
-              eyebrow="Products & services"
-              title="Industrial products we supply"
-              description="Standard and custom industrial products for production, project and maintenance requirements."
-            />
-            <Button asChild variant="outline" size="lg">
-              <Link to="/products">
-                View full catalogue <ArrowRight />
-              </Link>
-            </Button>
-          </div>
-          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {PRODUCTS.slice(0, 8).map((p) => (
-              <Link
-                key={p.slug}
-                to="/products"
-                hash={p.slug}
-                className="group overflow-hidden rounded-md border bg-card shadow-card transition-all hover:-translate-y-1 hover:shadow-lift"
-              >
-                <div className="aspect-square overflow-hidden bg-muted">
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    loading="lazy"
-                    className="size-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-5">
-                  <h3 className="font-bold text-navy">{p.name}</h3>
-                  <p className="mt-1.5 text-sm text-muted-foreground">{p.summary}</p>
-                </div>
-              </Link>
-            ))}
-          </div>
-          <div className="mt-10 grid gap-4 rounded-md border bg-secondary p-6 md:grid-cols-[1fr_auto] md:items-center md:p-8">
-            <div>
-              <h3 className="text-lg font-bold text-navy">Also offering engineering services</h3>
-              <p className="mt-1 text-sm text-muted-foreground">
-                Engineering job-work · Fabrication · Machining · Component sourcing · Custom requirements
-              </p>
-            </div>
-            <Button asChild variant="navy" size="lg">
-              <Link to="/services">
-                Our services <ArrowRight />
-              </Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
-      {/* INDUSTRIES */}
-      <section className="blueprint-grid bg-navy-deep py-20 text-navy-foreground md:py-28">
-        <div className="container-page">
-          <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-            <div className="max-w-2xl">
-              <p className="eyebrow">Industries we serve</p>
-              <h2 className="mt-3 text-3xl font-bold leading-tight md:text-4xl">
-                Supporting industrial buyers across sectors
-              </h2>
-            </div>
-            <Button asChild variant="onDark" size="lg">
-              <Link to="/industries">
-                All industries <ArrowRight />
-              </Link>
-            </Button>
-          </div>
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {INDUSTRIES.map((ind, i) => (
-              <Link
-                key={ind.slug}
-                to="/industries"
-                hash={ind.slug}
-                className={`group relative isolate flex min-h-60 items-end overflow-hidden rounded-md ${i === 0 ? "sm:col-span-2" : ""}`}
-              >
-                <img
-                  src={ind.image}
-                  alt={ind.name}
-                  loading="lazy"
-                  className="absolute inset-0 -z-20 size-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 -z-10 bg-tile-overlay" />
-                <div className="p-5">
-                  <h3 className="text-lg font-bold">{ind.name}</h3>
-                  {i === 0 && <p className="mt-1 max-w-sm text-sm text-navy-muted">{ind.description}</p>}
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* WHY CHOOSE */}
-      <section className="py-20 md:py-28">
-        <div className="container-page">
-          <SectionHeading
-            eyebrow="Why choose us"
-            title="Why choose Sri Arumugam Traders?"
-            description="What purchase managers and engineering teams can expect when they work with us."
-            align="center"
-          />
-          <div className="mt-14 grid gap-x-10 gap-y-12 md:grid-cols-2 lg:grid-cols-3">
-            {WHY.map((w) => (
-              <div key={w.title} className="border-l-2 border-signal pl-6">
-                <w.icon className="size-6 text-navy" />
-                <h3 className="mt-4 text-lg font-bold text-navy">{w.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{w.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* VENDOR REGISTRATION */}
-      <section className="pb-20 md:pb-28">
-        <div className="container-page">
-          <div className="grid gap-8 rounded-md border-2 border-navy/15 bg-card p-8 md:grid-cols-[auto_1fr_auto] md:items-center md:p-10">
-            <span className="grid size-16 place-items-center rounded-sm bg-accent text-navy">
-              <Factory className="size-8" />
-            </span>
-            <div>
-              <h2 className="text-2xl font-bold text-navy">Vendor registration opportunities</h2>
-              <p className="mt-2 max-w-2xl text-muted-foreground">
-                Procurement teams are welcome to add {COMPANY.name} to their vendor list. Email your
-                vendor registration form or supplier onboarding requirements to{" "}
-                <a href={`mailto:${COMPANY.email}?subject=Vendor%20Registration`} className="font-semibold text-navy underline underline-offset-2">
-                  {COMPANY.email}
-                </a>
-                .
-              </p>
-            </div>
+          </ol>
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild variant="navy" size="xl">
-              <a href={`mailto:${COMPANY.email}?subject=Vendor%20Registration`}>Send vendor form</a>
+              <a href={VENDOR_MAIL}>
+                <Mail /> Email vendor form
+              </a>
+            </Button>
+            <Button asChild variant="outline" size="xl">
+              <a
+                href={whatsappLink("Hello Sri Arumugam Traders, we would like to register you as a vendor.")}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <WhatsAppIcon className="size-4" /> Ask on WhatsApp
+              </a>
             </Button>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
+  );
+}
 
-      <CtaBand />
-    </>
+/* ----------------------------------------------------------------- FAQ */
+
+function Faq() {
+  return (
+    <section className="steel-grid border-y bg-secondary py-20 md:py-28">
+      <div className="container-page grid gap-12 lg:grid-cols-[1fr_1.6fr] lg:gap-16">
+        <div>
+          <SectionHeading
+            eyebrow="Before you send an RFQ"
+            title="Common questions from buyers"
+            description="Quick answers for purchase managers and engineers. Can't find yours? Ask us directly."
+          />
+          <Button asChild variant="link" className="mt-4 px-0 text-navy">
+            <a href={whatsappLink("Hello Sri Arumugam Traders, I have a question:")} target="_blank" rel="noopener noreferrer">
+              <MessagesSquare /> Ask a question on WhatsApp
+            </a>
+          </Button>
+        </div>
+        <Accordion type="single" collapsible defaultValue="faq-0" className="rounded-md border bg-card px-6 shadow-card">
+          {FAQS.map((f, i) => (
+            <AccordionItem key={f.q} value={`faq-${i}`} className="last:border-b-0">
+              <AccordionTrigger className="py-5 text-base font-semibold text-navy hover:no-underline">{f.q}</AccordionTrigger>
+              <AccordionContent className="pb-5 text-sm leading-relaxed text-muted-foreground">{f.a}</AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </section>
+  );
+}
+
+/* --------------------------------------------------------- DIRECT LINE */
+
+function DirectLine() {
+  const channels = [
+    {
+      icon: Phone,
+      label: "Call",
+      value: COMPANY.mobileDisplay,
+      href: `tel:${COMPANY.mobileTel}`,
+      external: false,
+    },
+    {
+      icon: WhatsAppIcon,
+      label: "WhatsApp",
+      value: "Send a message or drawing photo",
+      href: whatsappLink(),
+      external: true,
+    },
+    {
+      icon: Mail,
+      label: "Email",
+      value: COMPANY.email,
+      href: `mailto:${COMPANY.email}`,
+      external: false,
+    },
+  ];
+  return (
+    <section className="py-20 md:py-24">
+      <div className="container-page">
+        <div className="overflow-hidden rounded-md bg-navy text-navy-foreground shadow-lift">
+          <div className="blueprint-grid grid gap-10 p-5 sm:p-8 md:p-12 lg:grid-cols-[1fr_1.3fr] lg:items-center">
+            <div>
+              <p className="eyebrow">Direct line</p>
+              <h2 className="mt-3 text-3xl font-bold leading-tight md:text-4xl">
+                Talk to {COMPANY.contactPerson} about your requirement
+              </h2>
+              <p className="mt-4 flex items-start gap-2 text-sm text-navy-muted">
+                <MapPin className="mt-0.5 size-4 shrink-0" />
+                {COMPANY.addressLines.slice(0, 3).join(", ")}
+              </p>
+              <Button asChild variant="signal" size="xl" className="mt-8">
+                <Link to="/request-quote">
+                  Request a Quotation <ArrowRight />
+                </Link>
+              </Button>
+            </div>
+            <ul className="grid gap-3">
+              {channels.map((c) => (
+                <li key={c.label}>
+                  <a
+                    href={c.href}
+                    {...(c.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                    className="group flex items-center gap-3 rounded-sm border border-navy-foreground/15 bg-navy-deep/40 p-4 sm:gap-4 sm:p-5 transition-colors hover:border-signal hover:bg-navy-deep/70"
+                  >
+                    <span className="grid size-10 shrink-0 place-items-center rounded-sm bg-navy-foreground/10 sm:size-11">
+                      <c.icon className="size-5" />
+                    </span>
+                    <span className="min-w-0 flex-1">
+                      <span className="block font-mono text-[0.68rem] uppercase tracking-[0.16em] text-navy-muted">{c.label}</span>
+                      <span className="block text-sm font-semibold [overflow-wrap:anywhere] sm:text-base">{c.value}</span>
+                    </span>
+                    <ArrowUpRight className="hidden size-4 shrink-0 text-navy-muted transition-colors group-hover:text-navy-foreground sm:block" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
