@@ -9,10 +9,7 @@ import {
   MessagesSquare,
   Phone,
   ScrollText,
-  Send,
   UserRound,
-  Wrench,
-  Package,
 } from "lucide-react";
 
 import heroImage from "@/assets/hero-industrial.jpg";
@@ -114,21 +111,6 @@ function HomePage() {
 
 /* ---------------------------------------------------------------- HERO */
 
-const INTENTS = [
-  {
-    icon: Package,
-    title: "I need industrial components",
-    text: "Flanges, valves, pipe fittings and more",
-    to: "/products" as const,
-  },
-  {
-    icon: Wrench,
-    title: "I need job-work done",
-    text: "Fabrication & machining to your drawing",
-    to: "/services" as const,
-  },
-];
-
 function Hero() {
   return (
     <section className="relative isolate overflow-hidden bg-navy-deep text-navy-foreground">
@@ -139,8 +121,8 @@ function Hero() {
         fetchPriority="high"
       />
       <div className="absolute inset-0 -z-10 bg-hero-overlay" />
-      <div className="container-page grid items-center gap-12 py-16 md:py-24 lg:min-h-[40rem] lg:grid-cols-[1.35fr_1fr] lg:gap-16">
-        <div>
+      <div className="container-page grid items-center gap-12 py-16 md:py-24 lg:min-h-[40rem]">
+        <div className="max-w-3xl">
           <p className="eyebrow animate-fade-up">Hosur · Tamil Nadu · India</p>
           <h1 className="animate-fade-up animation-delay-1 mt-5 text-4xl font-extrabold leading-[1.05] sm:text-5xl xl:text-6xl">
             Your Trusted Partner in Industrial Components &amp; Engineering Solutions
@@ -161,56 +143,6 @@ function Hero() {
           </div>
         </div>
 
-        <div className="animate-fade-up animation-delay-2 rounded-md border border-navy-foreground/15 bg-navy-deep/70 p-2 shadow-lift backdrop-blur-md">
-          <p className="px-4 pb-2 pt-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-navy-muted">
-            How can we help you today?
-          </p>
-          <ul className="grid gap-1.5">
-            {INTENTS.map((it) => (
-              <li key={it.title}>
-                <Link
-                  to={it.to}
-                  className="group flex items-center gap-4 rounded-sm bg-navy-foreground/5 p-4 transition-colors hover:bg-navy-foreground/10"
-                >
-                  <span className="grid size-11 shrink-0 place-items-center rounded-sm bg-signal text-signal-foreground">
-                    <it.icon className="size-5" />
-                  </span>
-                  <span className="flex-1">
-                    <span className="block font-semibold">{it.title}</span>
-                    <span className="block text-sm text-navy-muted">{it.text}</span>
-                  </span>
-                  <ArrowRight className="size-4 text-navy-muted transition-transform group-hover:translate-x-1 group-hover:text-navy-foreground" />
-                </Link>
-              </li>
-            ))}
-            <li>
-              <a
-                href={whatsappLink()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex items-center gap-4 rounded-sm bg-navy-foreground/5 p-4 transition-colors hover:bg-navy-foreground/10"
-              >
-                <span className="grid size-11 shrink-0 place-items-center rounded-sm bg-whatsapp text-whatsapp-foreground">
-                  <WhatsAppIcon className="size-5" />
-                </span>
-                <span className="flex-1">
-                  <span className="block font-semibold">Not sure what you need?</span>
-                  <span className="block text-sm text-navy-muted">Send a photo or message on WhatsApp</span>
-                </span>
-                <ArrowRight className="size-4 text-navy-muted transition-transform group-hover:translate-x-1 group-hover:text-navy-foreground" />
-              </a>
-            </li>
-          </ul>
-          <Link
-            to="/request-quote"
-            className="mt-2 flex items-center justify-between rounded-sm bg-navy-foreground px-4 py-3.5 text-sm font-semibold text-navy transition-colors hover:bg-steel-light"
-          >
-            <span className="flex items-center gap-2">
-              <Send className="size-4" /> Have a drawing? Send your RFQ
-            </span>
-            <ArrowUpRight className="size-4" />
-          </Link>
-        </div>
       </div>
     </section>
   );
